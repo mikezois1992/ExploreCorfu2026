@@ -1,0 +1,289 @@
+{% extends "template.html" %}
+
+{% block title %}EXPLORE CORFU{% endblock %}
+
+{% block head_extra %}
+<style>
+  /* ===== HERO OVERLAY πάνω στο carousel ===== */
+  #myCarousel { position: relative; }
+
+  /* Home: carousel να ακουμπάει άκρη-άκρη */
+  .home-fluid { padding-left: 0 !important; padding-right: 0 !important; }
+  #myCarousel { width: 100%; }
+  #myCarousel .carousel-item img { width: 100% !important; display: block; }
+
+  .hero-overlay{
+    position:absolute;
+    inset:0;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:flex-start;
+    padding:5vw;
+    color:#fff;
+    background:linear-gradient(
+      90deg,
+      rgba(0,0,0,0.55) 0%,
+      rgba(0,0,0,0.25) 42%,
+      rgba(0,0,0,0.0) 75%
+    );
+    z-index:5;
+    pointer-events:none;
+  }
+
+  .hero-overlay h1{
+    font-size:clamp(2rem, 4vw, 3.5rem);
+    font-weight:800;
+    margin:0 0 .5rem 0;
+    letter-spacing:.5px;
+    text-transform:uppercase;
+  }
+
+  .hero-overlay p{
+    font-size:clamp(1rem, 1.6vw, 1.3rem);
+    max-width:560px;
+    margin:0 0 1.25rem 0;
+    opacity:0.95;
+  }
+
+  .hero-actions{
+    display:flex;
+    gap:1rem;
+    flex-wrap:wrap;
+    pointer-events:auto;
+  }
+
+  @media (max-width: 768px){
+    .hero-overlay{
+      align-items:center;
+      text-align:center;
+      background:linear-gradient(
+        180deg,
+        rgba(0,0,0,0.55) 0%,
+        rgba(0,0,0,0.35) 55%,
+        rgba(0,0,0,0.0) 85%
+      );
+    }
+  }
+
+  /* ===== Home top buttons layout ===== */
+  .home-topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  padding:10px 14px;
+  flex-wrap:wrap;
+
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  z-index:20;
+
+  background:transparent;
+}
+#myCarousel{
+  margin-top:70px;
+}
+
+@media (max-width: 768px){
+  #myCarousel{
+    margin-top:0;
+  }
+
+  .home-topbar{
+    position:relative;
+    background:#fff;
+  }
+
+  .home-fluid{
+    margin-top:0;
+  }
+
+  .carousel-item img{
+    min-height:240px;
+  }
+
+  .hero-overlay{
+    padding:24px 16px;
+  }
+
+  .hero-actions{
+    justify-content:center;
+  }
+}
+
+  .home-topbar-left,
+  .home-topbar-right{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    flex-wrap:wrap;
+    min-width:0;
+  }
+
+  .top-left-buttons{
+    position:static !important;
+    display:flex !important;
+    gap:10px !important;
+    flex-wrap:wrap !important;
+    align-items:center !important;
+    justify-content:flex-start !important;
+    margin:0 !important;
+  }
+
+  .button-container{
+    position:static !important;
+    display:flex !important;
+    gap:10px !important;
+    flex-wrap:wrap !important;
+    align-items:center !important;
+    justify-content:flex-end !important;
+    margin:0 !important;
+  }
+
+  .home-topbar .btn{
+    border-radius: 999px !important;
+    padding: .55rem .95rem !important;
+    font-weight: 600 !important;
+    letter-spacing: .2px;
+    box-shadow: 0 1px 0 rgba(0,0,0,.04);
+  }
+
+  .home-topbar .btn.btn-lg{
+    padding: .6rem 1rem !important;
+    font-size: 1rem !important;
+  }
+
+  .home-topbar .btn.btn-outline-primary,
+  .home-topbar .btn.btn-outline-secondary{
+    background: #fff;
+  }
+
+  @media (max-width: 520px){
+    .home-topbar-right{
+      width:100%;
+      justify-content:flex-end;
+    }
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+
+{% if session.get('username') %}
+<div class="container mt-4" style="max-width: 980px;">
+  <h4 class="text-success">{{ ('Καλωσόρισες, ' ~ session['username']) | autotranslate }}</h4>
+</div>
+{% endif %}
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div class="container mt-3" style="max-width: 980px;">
+      {% for category, message in messages %}
+        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
+<div class="home-topbar">
+  <div class="home-topbar-left top-left-buttons">
+    <a href="{{ url_for('switch_lang', code='el') }}" class="btn btn-outline-primary">🇬🇷 Ελληνικά</a>
+    <a href="{{ url_for('switch_lang', code='en') }}" class="btn btn-outline-secondary">🇬🇧 English</a>
+
+    {% if session.get('username') %}
+    <form action="/logout" method="POST" style="margin:0;">
+      <button type="submit" class="btn btn-danger">
+        {{ 'Αποσύνδεση' | autotranslate }}
+      </button>
+    </form>
+    {% endif %}
+  </div>
+
+  <div class="home-topbar-right button-container">
+    <form action="/login" method="get" style="margin:0;">
+      <button type="submit" class="btn btn-primary btn-lg">
+        {{ 'Σύνδεση με Account' | autotranslate }}
+      </button>
+    </form>
+
+    <form action="/guest" method="get" style="margin:0;">
+      <button type="submit" class="btn btn-secondary btn-lg">
+        {{ 'Συνέχεια ως Επισκέπτης' | autotranslate }}
+      </button>
+    </form>
+  </div>
+</div>
+
+<div class="container-fluid home-fluid">
+  <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active"
+              aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    </div>
+
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="{{ url_for('static', filename='img/img1.jpg') }}" class="d-block w-100" alt="CORFU1" style="width:100%;">
+      </div>
+      <div class="carousel-item">
+        <img src="{{ url_for('static', filename='img/img2.jpg') }}" class="d-block w-100" alt="CORFU2" style="width:100%;">
+      </div>
+      <div class="carousel-item">
+        <img src="{{ url_for('static', filename='img/img3.jpg') }}" class="d-block w-100" alt="CORFU3" style="width:100%;">
+      </div>
+    </div>
+
+    <div class="hero-overlay">
+      <h1>Explore Corfu</h1>
+      <p>Walk the island. Discover the unseen.</p>
+
+      <div class="hero-actions">
+        <a href="/routes" class="btn btn-primary btn-lg">🗺️ Explore Routes</a>
+        <a href="{{ url_for('where_to_go') }}" class="btn btn-outline-light btn-lg">
+              📍 Where to go
+        </a>
+      </div>
+    </div>
+
+    <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+
+  </div>
+
+  <section id="about-us" class="py-4" style="max-width: 980px; margin: 0 auto;">
+    <h2>{{ 'Περπατώντας στην Κέρκυρα' | autotranslate }}</h2>
+    <p>
+      {{ 'Η Κέρκυρα είναι ένας τόπος που αξίζει να τον ζήσεις με το ρυθμό του περπατήματος.'|autotranslate}}
+      {{ 'Μέσα από το site μας, σας προσκαλούμε να γνωρίσετε το νησί με έναν πιο αυθεντικό και βιωματικό τρόπο: περπατώντας.' | autotranslate }}
+    </p>
+    <p>{{ 'Προτείνουμε διαδρομές που συνδυάζουν φυσικές ομορφιές, ιστορικά μνημεία και τοπικές παραδόσεις, δίνοντάς σας τη δυνατότητα να ανακαλύψετε την Κέρκυρα πέρα από τα συνηθισμένα.' | autotranslate }}</p>
+    <p>{{ 'Εξερευνήστε, εμπνευστείτε και απολαύστε κάθε σας βήμα!' | autotranslate }}</p>
+  </section>
+
+  {# Δεν βάζουμε εδώ search/icons/footer — τα έχει ήδη το template.html #}
+
+</div>
+{% endblock %}
+
+{% block scripts_extra %}
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    initLiveSearch();
+  });
+</script>
+{% endblock %}

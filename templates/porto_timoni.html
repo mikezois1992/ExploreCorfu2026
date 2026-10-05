@@ -1,0 +1,103 @@
+{% extends "template.html" %}
+
+{% block title %}Porto Timoni{% endblock %}
+
+{% block content %}
+<div class="container-lg py-4" style="max-width: 980px;">
+  <h2 class="mb-3">Porto Timoni</h2>
+
+  {# εικόνες 1..17 #}
+  {% set images = [] %}
+  {% for i in range(1, 18) %}
+    {% set _ = images.append('img/porto/' ~ i ~ '.jpg') %}
+  {% endfor %}
+
+  <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+    <!-- Indicators -->
+    <div class="carousel-indicators">
+      {% for i in range(0, images|length) %}
+        <button type="button"
+                data-bs-target="#myCarousel"
+                data-bs-slide-to="{{ i }}"
+                class="{% if i == 0 %}active{% endif %}"
+                {% if i == 0 %}aria-current="true"{% endif %}
+                aria-label="Slide {{ i + 1 }}">
+        </button>
+      {% endfor %}
+    </div>
+
+    <!-- Inner -->
+    <div class="carousel-inner">
+      {% for img in images %}
+        <div class="carousel-item {% if loop.first %}active{% endif %}">
+          <img src="{{ url_for('static', filename=img) }}"
+               class="d-block w-100"
+               alt="Porto Timoni {{ loop.index }}">
+        </div>
+      {% endfor %}
+    </div>
+
+    <!-- Controls -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+
+  <br>
+
+  <section>
+    <p>
+      {{'Το Πόρτο Τιμόνι (Porto Timoni) είναι μία από τις πιο μαγευτικές και "μυστικές" παραλίες της Κέρκυρας, που βρίσκεται κάτω από το χωριό Αφιώνας, στη βορειοδυτική πλευρά του νησιού.'|autotranslate}}
+      {{'Πρόκειται για έναν εντυπωσιακό διπλό κόλπο με τιρκουάζ νερά και άγρια, παρθένα ομορφιά.'|autotranslate}}
+      {{'Κάτω από τον παραδοσιακό οικισμό Αφιώνας, σε απόσταση περίπου 35 χλμ από την πόλη της Κέρκυρας.'|autotranslate}}
+      {{'Είναι μια δίδυμη παραλία με λωρίδα ξηράς που χωρίζει δύο κόλπους — από τη μία πλευρά είναι το Ιόνιο Πέλαγος και από την άλλη ο όρμος της Λιμνίτσας.'|autotranslate}}
+      {{'Ιδανικό για όσους αγαπούν το snorkeling, την απομόνωση και την άγρια ομορφιά.'|autotranslate}}
+      {{'Κοντά βρίσκονται ερείπια ενός παλιού ναού της Αφροδίτης.'|autotranslate}}
+    </p>
+  </section>
+
+  <br><br>
+
+  <div class="map-wrapper">
+    <div class="map">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m24!1m8!1m3!1d3068.82933452289!2d19.65776422480409!3d39.721017997690765!3m2!1i1024!2i768!4f13.1!4m13!3e2!4m5!1s0x135b521c26070d47%3A0x32cb4bc9deac3061!2zzpHPhs65z4nOvc6xz4IsIDQ5MCA4MQ!3m2!1d39.721992799999995!2d19.6605235!4m5!1s0x135b53459bd1a505%3A0x90e3a6e19b72eaa0!2zUG9ydG8gVGltb25pIFJlc3RhdXJhbnQgJiBQb3J0byBUaW1vbmkgQXBhcnRtZW50cywgzpHPhs65z4nOvc6xz4IgNDkwIDgx!3m2!1d39.7200446!2d19.6604603!5e0!3m2!1sel!2sgr!4v1753035147059!5m2!1sel!2sgr"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+    </div>
+
+    <div class="info-section">
+      <p>🚩{{'Αφετηρία: Από την πλατεία του Αφιώνα, περπατάς μέχρι το τέλος του χωριού. Εκεί ξεκινάει το μονοπάτι για Πόρτο Τιμόνι, με απλές πινακίδες.'|autotranslate}}</p>
+      <p>🚶‍♂️ {{'Κατά τη διαδρομή έχει σημεία με θέα που κόβει την ανάσα — ιδανικά για φωτογραφίες.'|autotranslate}}</p>
+      <p>⬆️ {{'Το μονοπάτι χωρίζεται σε δύο κατευθύνσεις:'|autotranslate}}</p>
+      <p>🌉 {{'Πόρτο Τιμόνι (βόρεια πλευρά), Παραλία Λιμνίτσα (νότια πλευρά).'|autotranslate}}</p>
+    </div>
+
+    <p class="paragraph">
+      🕒 <strong>{{'Διάρκεια:'|autotranslate}}</strong>
+      {{'20–30 λεπτά κατάβαση, ~30–40 λεπτά επιστροφή (ανάβαση).'|autotranslate}}
+      <br>
+      📏 <strong>{{'Απόσταση:'|autotranslate}}</strong>
+      {{'Περίπου 1 χλμ από την πλατεία του χωριού.'|autotranslate}}
+      <br>
+      💡 <strong>{{'Συμβουλή:'|autotranslate}}</strong>
+      {{'Στενό, φυσικό, με πέτρα και χώμα. Σε κάποια σημεία είναι εκτεθειμένο στον ήλιο και απότομο.'|autotranslate}}
+    </p>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts_extra %}
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    if (typeof initLiveSearch === "function") initLiveSearch();
+  });
+</script>
+{% endblock %}

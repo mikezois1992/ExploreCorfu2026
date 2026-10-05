@@ -1,0 +1,107 @@
+{% extends "template.html" %}
+
+{% block title %}Makrades{% endblock %}
+
+{% block content %}
+<div class="container-lg py-4" style="max-width: 980px;">
+  <h2 class="mb-3">Makrades</h2>
+
+  {# --- εικόνες 1..14 --- #}
+  {% set images = [] %}
+  {% for i in range(1, 15) %}
+    {% set _ = images.append('img/makrades/makrades/' ~ i ~ '.jpg') %}
+  {% endfor %}
+
+  <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+    <!-- Indicators -->
+    <div class="carousel-indicators">
+      {% for i in range(0, images|length) %}
+        <button type="button"
+                data-bs-target="#myCarousel"
+                data-bs-slide-to="{{ i }}"
+                class="{% if i == 0 %}active{% endif %}"
+                {% if i == 0 %}aria-current="true"{% endif %}
+                aria-label="Slide {{ i + 1 }}">
+        </button>
+      {% endfor %}
+    </div>
+
+    <!-- Inner -->
+    <div class="carousel-inner">
+      {% for img in images %}
+        <div class="carousel-item {% if loop.first %}active{% endif %}">
+          <img src="{{ url_for('static', filename=img) }}"
+               class="d-block w-100"
+               alt="Makrades {{ loop.index }}">
+        </div>
+      {% endfor %}
+    </div>
+
+    <!-- Controls -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+
+  <br>
+
+  <section>
+    <p>
+      {{'Οι Μακράδες είναι ένα γραφικό, παραδοσιακό χωριό στη βορειοδυτική Κέρκυρα, μέσα σε καταπράσινο αιωνόβιο ελαιώνα, σε υψόμετρο περίπου 295–318 μέτρα πάνω από τη στάθμη της θάλασσας και πληθυσμό περίπου 124 μόνιμοι κάτοικοι.'|autotranslate}}
+      {{'Ανήκει στον Δήμο Κεντρικής Κέρκυρας και Διαποντίων Νήσων. Βρίσκεται πάνω σε ένα λόφο με ελαιόδεντρα, κοντά στην Παλαιοκαστρίτσα και το Αγγελόκαστρο (~1 χλμ περίπου). '|autotranslate}}
+      {{'Το χωριό διατηρεί την αρχιτεκτονική διάρκειας αιώνων — παλιά σπίτια, στενά στρωμένα σοκάκια και πλατείες, στοιχεία που μοιάζουν σαν να έχουν μείνει παγωμένα στον 13ο–17ο αιώνα και ειναι χτισμένο μέσα σε αιωνόβια ελαιόδεντρα, προβάλλει μια αυθεντική εικόνα της αγροτικής Κέρκυρας.'|autotranslate}}
+      {{'Στο χωριό υπάρχει η εκκλησία Αγίας Παρασκευής (17ος αιώνας), καθώς και καφενεία και ταβέρνες όπου μπορείς να δοκιμάσεις παραδοσιακές γεύσεις. Κοντινός περίπατος στο Αγγελόκαστρο (~1 χλμ).'|autotranslate}}
+    </p>
+  </section>
+
+  <br><br>
+
+  <div class="map-wrapper">
+    <div class="map">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d49118.461769282825!2d19.673081707182966!3d39.69686551305639!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e2!4m5!1s0x135b5012a990ba9f%3A0x4280f0285593214!2zzqTOoc6fzqXOnM6gzojOpM6RIM6kzrHOss6tz4HOvc6xIM6azrHPhs6tLCDOpM-Bzr_Phc68z4DOrc-EzrEsIM6kz4HOv8-FzrzPgM61z4TPhM6xz4I!3m2!1d39.7066132!2d19.7470841!4m5!1s0x135b516ac6fd4c59%3A0x60d93e76aedffe1!2zzpHOs86zzrXOu8-MzrrOsc-Dz4TPgc6_LCDOoM6xzrvOsc65zr_Ous6xz4PPhM-Bzq_PhM61z4I!3m2!1d39.6782141!2d19.6865652!5e0!3m2!1sel!2sgr!4v1748196257884!5m2!1sel!2sgr"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+    </div>
+
+    <div class="info-section">
+      <p>🚩 {{'Απευθείας διαδρομή Μακράδες - Αγγελόκαστρο'|autotranslate}}</p>
+    </div>
+
+    <p class="paragraph">
+      <strong>{{'Μακράδες - Αγγελόκαστρο:'|autotranslate}}</strong><br>
+      🕒 <strong>{{'Διάρκεια:'|autotranslate}}</strong> {{'περίπου 1 ώρα κατά μέσο όρο για πήγαινε-έλα.'|autotranslate}}
+      <br>
+      📏 <strong>{{'Απόσταση:'|autotranslate}}</strong> {{'~ περίπου 3 km (1,9 μίλια) μονόδρομα. H διαδρομή θεωρείται ευκολη-μέτρια, με λίγες ανηφοριές και ίσως σκαλοπάτια προς την κορυφή του κάστρου'|autotranslate}}
+      <br>
+      💡 <strong>{{'Συμβουλή:'|autotranslate}}</strong> {{'Συνίσταται εξοπλισμός: πεζοπορικά παπούτσια ή παπούτσια νερού, καπέλο, αντηλιακό, νερό.'|autotranslate}}
+
+      <br><br>
+
+      <strong>{{'Κυκλική διαδρομή Μακράδες – Κρήνη – Αγγελόκαστρο – Μακράδες:'|autotranslate}}</strong><br>
+      🕒 <strong>{{'Διάρκεια:'|autotranslate}}</strong> {{'περίπου 1 ώρα 47 λεπτά'|autotranslate}}
+      <br>
+      📏 <strong>{{'Απόσταση:'|autotranslate}}</strong> {{'~ Απόσταση περίπου 5,8–6 km, σε υψόμετρο περίπου 120–130 m ανόδου'|autotranslate}}
+      <br>
+      💡 <strong>{{'Συμβουλή:'|autotranslate}}</strong> {{' Συνίσταται εξοπλισμός: πεζοπορικά παπούτσια ή παπούτσια νερού, καπέλο, αντηλιακό, νερό, μπαστούνι, σνακ, κινητό, και βασικά είδη πρώτων βοηθειών.'|autotranslate}}
+      {{'Μια όμορφη διαδρομή μέσα από ελαιώνες και παλιές πορτοκαλιές. Στάσεις στην Κρήνη και κατά την ανηφόρα προς το κάστρο σου χαρίζουν υπέροχη θέα προς τον Θερμαϊκό Κόλπο και τα βόρεια ακρωτήρια της Κέρκυρας.'|autotranslate}}
+      {{'Το ίδιο το Αγγελόκαστρο προσφέρει εξαιρετικό πανοραμικό σημείο πάνω από το Ιόνιο'|autotranslate}}
+    </p>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts_extra %}
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    if (typeof initLiveSearch === "function") initLiveSearch();
+  });
+</script>
+{% endblock %}

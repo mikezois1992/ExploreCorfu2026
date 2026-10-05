@@ -1,0 +1,115 @@
+{% extends "template.html" %}
+
+{% block title %}Nimfes{% endblock %}
+
+{% block content %}
+<div class="container-lg py-4" style="max-width: 980px;">
+  <h2 class="mb-3">Nimfes</h2>
+
+  {# --- εικόνες 1..14 --- #}
+  {% set images = [] %}
+  {% for i in range(1, 15) %}
+    {% set _ = images.append('img/Καταρράκτες Νυμφές/' ~ i ~ '.jpg') %}
+  {% endfor %}
+
+  <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+    <!-- Indicators -->
+    <div class="carousel-indicators">
+      {% for i in range(0, images|length) %}
+        <button type="button"
+                data-bs-target="#myCarousel"
+                data-bs-slide-to="{{ i }}"
+                class="{% if i == 0 %}active{% endif %}"
+                {% if i == 0 %}aria-current="true"{% endif %}
+                aria-label="Slide {{ i + 1 }}">
+        </button>
+      {% endfor %}
+    </div>
+
+    <!-- Inner -->
+    <div class="carousel-inner">
+      {% for img in images %}
+        <div class="carousel-item {% if loop.first %}active{% endif %}">
+          <img src="{{ url_for('static', filename=img) }}"
+               class="d-block w-100"
+               alt="Nimfes {{ loop.index }}">
+        </div>
+      {% endfor %}
+    </div>
+
+    <!-- Controls -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+
+  <br>
+
+  <section>
+    <p>
+      {{'Βρίσκεται στην βόρεια Κέρκυρα, στο ορεινό τμήμα του όρους Παντοκράτορα, σε υψόμετρο περίπου 148 μ.'|autotranslate}}
+      {{'Είναι χτισμένο μέσα σε καταπράσινη κοιλάδα, περίπου 19 χλμ βόρεια της πόλης της Κέρκυρας.'|autotranslate}}
+      {{'Περιβάλλεται από πεύκα, βελανιδιές, πλατύφυλλα δέντρα και ποταμάκια.'|autotranslate}}
+      {{'Πρόκειται για γραφικό χωριό με παραδοσιακή πλατεία, πλούσια βλάστηση και άφθονες πηγές.'|autotranslate}}
+      {{'Ο κύριος καταρράκτης έχει ύψος περίπου 10–15 μέτρα, με ξέσπασμα νερού σε μια καταπράσινη χαράδρα.'|autotranslate}}
+      {{'Υπάρχουν κι άλλοι μικρότεροι νότια, εφοδιασμένοι από χειμάρρους που καταβρέχουν το φαράγγι.'|autotranslate}}
+      {{'Το όνομα "Νύμφες" προέρχεται από τις νύμφες, μυθικά όντα που λέγεται ότι λούζονταν στις πηγές και τους καταρράκτες της περιοχής.'|autotranslate}}
+      {{'Επιπλέον σημεία ενδιαφέροντος: Ασκηταριό / τάφος Άρτεμιου Παίσιου: Μικρό εκκλησάκι – μονή που συναντάται κατά μήκος της διαδρομής.'|autotranslate}}
+      {{'Αγροτικό τοπίο με μελίσσια, ποτάμια και παραδοσιακές δομές — δίπλα στη μικρή τοπική αλληλεπίδραση.'|autotranslate}}
+      {{'Ιδανικός προορισμός αν θες μικρή πεζοπορία μέσα στη φύση, πρόσβαση σε νερό, διάσπαρτα μονοπάτια και μυστική ατμόσφαιρα.'|autotranslate}}
+    </p>
+  </section>
+
+  <br><br>
+
+  <div class="map-wrapper">
+    <div class="map">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d12269.527425919861!2d19.783818044756686!3d39.75353409168356!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e2!4m5!1s0x135b450b23625d21%3A0xad55b5c333b5ac95!2zzp3Pjc68z4bOtc-CLCA0OTAgODE!3m2!1d39.7558694!2d19.7827883!4m5!1s0x135b45018bcb44a3%3A0xde6b78246643cfb0!2zzprOsc-EzrHPgc-BzqzOus-EzrXPgiDOnc-FzrzPhs-Ozr0sIM6YzrnOvc6szrvOuQ!3m2!1d39.7509066!2d19.8051511!5e0!3m2!1sel!2sgr!4v1748196114212!5m2!1sel!2sgr"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+    </div>
+
+    <div class="info-section">
+      <p>🚩 {{'Αφετηρία:Πλατεία χωριού Νυμφών'|autotranslate}}</p>
+      <p>🚶‍♂️ {{'Περνάς μπροστά από το γήπεδο ποδοσφαίρου.'|autotranslate}}</p>
+      <p>⬆️ {{'Ακολουθείς χωματόδρομο/μονοπάτι για περίπου 1,5–2 χλμ'|autotranslate}}</p>
+      <p>🌉 {{'Μπλε/κόκκινες πινακίδες κατά μήκος της διαδρομής, με κατευθύνσεις για μονοπάτια και σημεία ενδιαφέροντος όπως ασκηταριό ή αρχαίες πηγές'|autotranslate}}</p>
+    </div>
+
+    <p class="paragraph">
+      🕒 <strong>{{'Διάρκεια:'|autotranslate}}</strong> {{'Περίπου 30–45 λεπτά ανά κατεύθυνση'|autotranslate}}
+      <br>
+      📏 <strong>{{'Απόσταση:'|autotranslate}}</strong> {{'περίπου 1,5–2 χλμ'|autotranslate}}
+      <br>
+      💡 <strong>{{'Συμβουλή:'|autotranslate}}</strong> {{'Φορέστε αθλητικό παπούτσι. Χωματόδρομος με ίσως ανηφορικά/κατηφορικά σημεία, αλλά γενικά εύκολη προς μέτρια διαδρομή, χωρίς τεχνικές δυσκολίες.'|autotranslate}}
+    </p>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts_extra %}
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    if (typeof initLiveSearch === "function") initLiveSearch();
+  });
+</script>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+

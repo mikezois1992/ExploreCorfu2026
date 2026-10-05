@@ -1,0 +1,61 @@
+{% extends "template.html" %}
+
+{% block head_extra %}
+  {# κρατάμε μόνο ό,τι είναι ειδικό για τη σελίδα #}
+  <script src="{{ url_for('static', filename='js/contact.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="container-lg py-4" style="max-width: 980px;">
+
+  <section id="contact-us">
+    <h2 class="mb-3">{{ 'Επικοινωνήστε μαζί μας'|autotranslate }}</h2>
+
+    <p>
+      {{ 'Θα χαρούμε πολύ να ακούσουμε τα σχόλια, τις απορίες ή τις προτάσεις σας!'|autotranslate }}
+      {{ 'Εάν χρειάζεστε περισσότερες πληροφορίες για κάποια διαδρομή ή θέλετε να μοιραστείτε μαζί μας τη δική σας εμπειρία περπατώντας στην Κέρκυρα, μη διστάσετε να επικοινωνήσετε.'|autotranslate }}
+    </p>
+
+    <p>
+      {{ 'Μπορείτε να μας στείλετε μήνυμα μέσω της φόρμας επικοινωνίας ή απευθείας στο email μας. Υποσχόμαστε να απαντήσουμε το συντομότερο δυνατόν.'|autotranslate }}
+    </p>
+
+    <p class="text-center mt-4">
+      <strong>Email:</strong> <a href="mailto:info@kerkyrawalks.gr">info@kerkyrawalks.gr</a><br>
+      <strong>Instagram:</strong> <a href="https://www.instagram.com/kerkyrawalks" target="_blank" rel="noopener">@kerkyrawalks</a><br>
+      <strong>Facebook:</strong> <a href="https://www.facebook.com/kerkyrawalks" target="_blank" rel="noopener">Kerkyra Walks</a>
+    </p>
+
+    <hr class="my-4">
+
+    <!-- Φόρμα Επικοινωνίας -->
+    <form id="contact-form" onsubmit="showThankYouMessage(event)">
+      <div class="mb-3">
+        <label for="name" class="form-label">{{ 'Όνομα:'|autotranslate }}</label>
+        <input type="text" id="name" name="name" class="form-control" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="email" class="form-label">Email:</label>
+        <input type="email" id="email" name="email" class="form-control" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="message" class="form-label">{{ 'Μήνυμα:'|autotranslate }}</label>
+        <textarea id="message" name="message" rows="5" class="form-control" required></textarea>
+      </div>
+
+      <button type="submit" class="btn btn-primary">
+        {{ 'Αποστολή'|autotranslate }}
+      </button>
+    </form>
+
+    <!-- Μήνυμα Ευχαριστίας -->
+    <p id="thank-you-message" class="mt-3">
+      {{ 'Ευχαριστούμε για την επικοινωνία σας! Θα σας απαντήσουμε σύντομα.'|autotranslate }}
+    </p>
+
+  </section>
+
+</div>
+{% endblock %}

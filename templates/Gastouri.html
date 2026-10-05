@@ -1,0 +1,104 @@
+{% extends "template.html" %}
+
+{% block title %}Gastouri{% endblock %}
+
+{% block content %}
+<div class="container-lg py-3">
+  <h2>Gastouri</h2>
+
+  {# --- Images (1..10) --- #}
+  {% set images = [] %}
+  {% for i in range(1, 11) %}
+    {% set _ = images.append('img/agia kyriaki gastouri/' ~ i ~ '.jpg') %}
+  {% endfor %}
+
+  <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+
+    <!-- Indicators -->
+    <div class="carousel-indicators">
+      {% for img in images %}
+        <button type="button"
+                data-bs-target="#myCarousel"
+                data-bs-slide-to="{{ loop.index0 }}"
+                class="{% if loop.first %}active{% endif %}"
+                aria-current="{% if loop.first %}true{% endif %}"
+                aria-label="Slide {{ loop.index }}">
+        </button>
+      {% endfor %}
+    </div>
+
+    <!-- Inner -->
+    <div class="carousel-inner">
+      {% for img in images %}
+        <div class="carousel-item {% if loop.first %}active{% endif %}">
+          <img src="{{ url_for('static', filename=img) }}"
+               class="d-block w-100"
+               alt="Gastouri {{ loop.index }}">
+        </div>
+      {% endfor %}
+    </div>
+
+    <!-- Controls -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+
+  </div>
+
+  <br>
+
+  <section>
+    <p>
+      {{'ο χωριό Γαστούρι βρίσκεται περίπου 12 μ. υψόμετρο (κοντά στο επίπεδο της θάλασσας), στο νότιο τμήμα της νοτιοδυτικής Κέρκυρας, σε απόσταση περίπου 10 χλμ από την πόλη της Κέρκυρας.'|autotranslate}}
+      {{'Ο λόφος της Αγίας Κυριακής, βόρεια του χωριού, ανυψώνεται γύρω στα 270 μ., κι αποκαλείται συχνά “μπαλκόνι της Κέρκυρας” λόγω της πανοραμικής θέας του προς την πόλη, τη λίμνη Καροίσσας και το Ιόνιο.'|autotranslate}}
+      {{'Η μορφολογία χαρακτηρίζεται από δασωμένους λόφους, ελαιώνες και μεσογειακή βλάστηση.'|autotranslate}}
+      {{'Τα μονοπάτια είναι συνδυασμός χωματόδρομων, πλακόστρωτων αγροτικών διαδρομών και φυσικών βατών μονοπατιών με κλίσεις.'|autotranslate}}
+      {{'Η διαδρομή είναι ιδανική για ήπια άσκηση, πανέμορφα τοπία και πανοραμική θέα.'|autotranslate}}
+      {{'Απευθύνεται σε περισσότερο casual πεζοπόρους παρά σε ομάδες ορειβατών.'|autotranslate}}
+      {{'Υπάρχουν δύο επιλογές διαδρομής:'|autotranslate}}
+    </p>
+  </section>
+
+  <br><br>
+
+  <div class="map-wrapper">
+    <div class="map">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d6152.053046325581!2d19.89605444048642!3d39.55900950799097!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e2!4m5!1s0x135b5f41de996adb%3A0x400bd2ce2b99430!2zzpPOsc-Dz4TOv8-Nz4HOuSwgNDkwIDg0!3m2!1d39.5616001!2d19.898624599999998!4m5!1s0x135b5f9fad53071b%3A0xd1b64a2b80c56c79!2zzpnOtc-Bz4zPgiDOnc6xz4zPgiDOkc6zzq_Osc-CIM6az4XPgc65zrHOus6uz4IsIM6Rz4fOr867zrvOtc65zr_OuSA0OTAgODQ!3m2!1d39.5565159!2d19.9042499!5e0!3m2!1sel!2sgr!4v1753373287107!5m2!1sel!2sgr"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+    </div>
+
+    <div class="info-section">
+      <p>
+        <strong>{{'1. Γαστούρι → Αγία Κυριακή (πλαϊνή ανηφόρα προς 270 μ.)'|autotranslate}}</strong><br>
+        🚩{{'Αφετηρία: Κέντρο Γαστούρι. Ακολουθήστε αγροτικούς και χωματόδρομους δυτικά/βορειοδυτικά προς τον λόφο.'|autotranslate}}
+      </p>
+      <p>🚶‍♂️ {{'Το μονοπάτι στα ανώτερα τμήματα γίνεται στενότερο, με κλίση αλλά χωρίς πολύ έντονες αναβάσεις.'|autotranslate}}</p>
+      <p>⬆️ {{'Στο τέλος συναντά πλακόστρωτο ή ελαφρώς ανηφορικό μονοπάτι που οδηγεί στην κορυφή με πανοραμική θέα.'|autotranslate}}</p>
+      <p>🌉 {{'Εφτασες!! Καλή πεζοπορία και απολαύστε τη διαδρομή!'|autotranslate}}</p>
+    </div>
+
+    <p class="paragraph">
+      🕒 <strong>{{'Διάρκεια:'|autotranslate}}</strong> {{'Περίπου 1–1,5 ώρα, ανάλογα τη φυσική κατάσταση'|autotranslate}}<br>
+      📏 <strong>{{'Απόσταση:'|autotranslate}}</strong> {{'περίπου 2,6 χιλιόμετρα'|autotranslate}}<br>
+      💡 <strong>{{'Συμβουλή:'|autotranslate}}</strong> {{'νερό, καπέλο και καλό παπούτσι.'|autotranslate}}
+    </p>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts_extra %}
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    initLiveSearch();
+  });
+</script>
+{% endblock %}
