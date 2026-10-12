@@ -1,4 +1,5 @@
 from flask import Flask, render_template, make_response, jsonify, request, redirect, url_for, flash, g, session
+import hashlib
 
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -308,10 +309,14 @@ def login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
+
+        # Δημιουργία MD5 hash του password που έδωσε ο χρήστης
+        hashed_password = hashlib.md5(password.encode()).hexdigest()
+
         user = User.query.filter_by(username=username).first()
         
         # Έλεγχος για τον χρήστη
-        if user and user.password == password:
+        if user and user.password == hashed_password:
             session['user_id'] = user.id  # Αποθήκευση στο session
             session['username'] = user.username  # 
             flash(_('Η σύνδεση ήταν επιτυχής!'), 'success')
@@ -348,7 +353,14 @@ def register():
             flash(_('Το email χρησιμοποιείται ήδη.'), 'danger')
             return redirect(url_for('register'))
 
-        new_user = User(username=username, email=email, password=password)
+        # Δημιουργία MD5 hash πριν αποθηκευτεί το password
+        hashed_password = hashlib.md5(password.encode()).hexdigest()
+
+        new_user = User(
+            username=username,
+            email=email,
+            password=hashed_password
+        )
         db.session.add(new_user)
         db.session.commit()
 
@@ -539,6 +551,7 @@ DESTINATIONS = {
         "lat": 39.60656779533143,
         "lon": 19.89981239373672,
         "image": "/static/img/Vlaxerena/vlaxerna/icon1.jpg",
+        "gallery_folder": "img/Vlaxerena/vlaxerna",
     },
     "Nisaki": {
         "slug": "Nisaki",
@@ -546,6 +559,7 @@ DESTINATIONS = {
         "lat": 39.70989964469676,
         "lon": 19.84198619413788,
         "image": "/static/img/Nisaki/nisaki pezoporia/icon1.jpg",
+        "gallery_folder": "img/Nisaki/nisaki pezoporia",
     },
     "agGordios": {
         "slug": "agGordios",
@@ -553,6 +567,7 @@ DESTINATIONS = {
         "lat": 39.5442142423328,
         "lon": 19.83537469455423,
         "image": "/static/img/Ag.Gorgios/nayagio agios gordis-20250524T162344Z-1-001/nayagio agios gordis/icon1.jpg",
+        "gallery_folder": "img/Ag.Gorgios/nayagio agios gordis-20250524T162344Z-1-001/nayagio agios gordis",
     },
     "arkoudilas": {
         "slug": "arkoudilas",
@@ -560,6 +575,7 @@ DESTINATIONS = {
         "lat": 39.37473498319727,
         "lon": 20.097719694390793,
         "image": "/static/img/arkoudilas/arkoudilas/icon1.jpg",
+        "gallery_folder": "img/arkoudilas/arkoudilas",
     },
     "erimitis": {
         "slug": "erimitis",
@@ -567,6 +583,7 @@ DESTINATIONS = {
         "lat": 39.776846245788605,
         "lon": 19.948111715082188,
         "image": "/static/img/Erimitis/erimitis/Ερημίτης/1.jpg",
+        "gallery_folder": "img/Erimitis/erimitis/Ερημίτης",
     },
     "loggas": {
         "slug": "loggas",
@@ -574,6 +591,7 @@ DESTINATIONS = {
         "lat": 39.788372986651034,
         "lon": 19.66685356579295,
         "image": "/static/img/loggas peroulades-20250717T175654Z-1-001/loggas peroulades/1.jpg",
+        "gallery_folder": "img/loggas peroulades-20250717T175654Z-1-001/loggas peroulades",
     },
     "canal": {
         "slug": "canal",
@@ -581,6 +599,7 @@ DESTINATIONS = {
         "lat": 39.797028111633345,
         "lon": 19.69802862278645,
         "image": "/static/img/canal/canal damour/1.jpg",
+        "gallery_folder": "img/canal/canal damour",
     },
     "ermones": {
         "slug": "ermones",
@@ -588,6 +607,7 @@ DESTINATIONS = {
         "lat": 39.610643947573266,
         "lon": 19.77796491380511,
         "image": "/static/img/ermones/ermones ekklisaki/1.jpg",
+        "gallery_folder": "img/ermones/ermones ekklisaki",
     },
     "giannades": {
         "slug": "giannades",
@@ -595,6 +615,7 @@ DESTINATIONS = {
         "lat": 39.630422238067766,
         "lon": 19.76331610069776,
         "image": "/static/img/giannades/Προφήτης Ηλίας- Γιαννάδες/1.jpg",
+        "gallery_folder": "img/giannades/Προφήτης Ηλίας- Γιαννάδες",
     },
     "makrades": {
         "slug": "makrades",
@@ -602,6 +623,7 @@ DESTINATIONS = {
         "lat": 39.688473001900796,
         "lon": 19.68884659534223,
         "image": "/static/img/makrades/makrades/1.jpg",
+        "gallery_folder": "img/makrades/makrades",
     },
     "Cape_Drastis": {
         "slug": "Cape_Drastis",
@@ -609,6 +631,7 @@ DESTINATIONS = {
         "lat": 39.79872004396612,
         "lon": 19.67381089553243,
         "image": "/static/img/cape drastis/1.jpg",
+        "gallery_folder": "img/cape drastis",
     },
     "MonRepos": {
         "slug": "MonRepos",
@@ -616,6 +639,7 @@ DESTINATIONS = {
         "lat": 39.61013563708864,
         "lon": 19.92732330901196,
         "image": "/static/img/mon repo/1.jpg",
+        "gallery_folder": "img/mon repo",
     },
     "nimfes": {
         "slug": "nimfes",
@@ -623,6 +647,7 @@ DESTINATIONS = {
         "lat": 39.75091482023042,
         "lon": 19.805129637856776,
         "image": "/static/img/Καταρράκτες Νυμφές/1.jpg",
+        "gallery_folder": "img/Καταρράκτες Νυμφές",
     },
     "oldFort": {
         "slug": "oldFortress",
@@ -630,6 +655,7 @@ DESTINATIONS = {
         "lat": 39.624064992943545,
         "lon": 19.92785386853177,
         "image": "/static/img/palaio frourio/6.jpg",
+        "gallery_folder": "img/palaio frourio",
     },
     "porto_timoni": {
         "slug": "porto_timoni",
@@ -637,6 +663,7 @@ DESTINATIONS = {
         "lat": 39.71551228857589,
         "lon": 19.65793458157802,
         "image": "/static/img/porto/1.jpg",
+        "gallery_folder": "img/Πόρτο Τιμόνι-αφιωνας",
     },
     "perama": {
         "slug": "perama",
@@ -644,6 +671,7 @@ DESTINATIONS = {
         "lat": 39.58287914400098,
         "lon": 19.913985372773638,
         "image": "/static/img/dromos toy nerou perama/2.jpg",
+        "gallery_folder": "img/dromos toy nerou perama",
     },
     "Gastouri": {
         "slug": "Gastouri",
@@ -651,6 +679,7 @@ DESTINATIONS = {
         "lat": 39.56081200833922,
         "lon": 19.901700340886574,
         "image": "/static/img/agia kyriaki gastouri/1.jpg",
+        "gallery_folder": "img/agia kyriaki gastouri",
     },
     "stavros": {
         "slug": "stavros",
@@ -658,8 +687,32 @@ DESTINATIONS = {
         "lat": 39.53192490198832,
         "lon": 19.906588303186936,
         "image": "/static/img/stavros loop/1.jpg",
+        "gallery_folder": "img/stavros loop",
     },
 }
+
+@app.route('/gallery/<destination>')
+def gallery(destination):
+    selected_destination = get_destination(destination)
+    if not selected_destination:
+        return redirect(url_for('home'))
+
+    gallery_folder = selected_destination['gallery_folder']
+    folder_path = os.path.join(app.static_folder, gallery_folder)
+    images = []
+
+    if os.path.exists(folder_path):
+        for filename in os.listdir(folder_path):
+            if filename.lower().endswith(('.jpg', '.jpeg', '.png', '.webp')):
+                images.append(filename)
+
+    images.sort()
+    return render_template(
+        'gallery.html',
+        destination=selected_destination,
+        images=images
+    )
+
 
 def _slugify(s: str) -> str:
     return (s or "").strip().lower()
